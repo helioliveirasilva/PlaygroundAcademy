@@ -5,9 +5,16 @@ import PlaygroundSupport
 
 class MyViewController : UIViewController {
     
+    
+    let section = UIView()
+    let section2 = UIView()
+    let expandButton = UIButton()
+
     override func loadView() {
         let view = UIView()
         view.backgroundColor = .purple
+        
+        //
         
 
 
@@ -41,7 +48,6 @@ class MyViewController : UIViewController {
         
 // Section
         
-        let section = UIView()
         section.backgroundColor = .green
         section.frame = CGRect(x: 8, y: 126, width:359 , height: 51)
         section.layer.cornerRadius = 13;
@@ -61,15 +67,13 @@ class MyViewController : UIViewController {
         secaoIcon.frame = CGRect(x: 10, y: 14.93, width: 20, height: 20)
         secaoIcon.image = UIImage(imageLiteralResourceName: "icon.png")
         
-        let expandButton = UIImageView()
-        expandButton.contentMode = .scaleToFill
         expandButton.frame = CGRect(x: 333.85, y: 15.85, width: 17, height: 17)
-        expandButton.image = UIImage(imageLiteralResourceName: "icon.png")
-        
+        expandButton.setImage(UIImage(imageLiteralResourceName: "icon.png"), for: .normal)
+        expandButton.addTarget(self, action: #selector(acaoBotao), for: .touchUpInside)
         
         
 // Hierarquias
-        
+
         view.addSubview(barraTop)
         view.addSubview(menu)
             menu.addSubview(menuBotao1)
@@ -78,12 +82,36 @@ class MyViewController : UIViewController {
             section.addSubview(label)
             section.addSubview(secaoIcon)
             section.addSubview(expandButton)
+
         self.view = view
         
     }
+ 
+    @objc func acaoBotao(){
+        
+        UIView.animate(withDuration: 0.2, delay: 0, options: [.curveEaseOut, .curveEaseIn], animations: {
+            
+            if self.section.frame.size.height == 51{
+                self.section.frame.size = CGSize(width: 359 , height: 244)
+                self.expandButton.rotate(angle: 90)
+            } else {
+                self.section.frame.size = CGSize(width: 359 , height: 51)
+                self.expandButton.rotate(angle: -90)
+            }
+            
+            
+        })
+
+        
+        
+
+    
+    }
+    
 }
 
 // Present the view controller in the Live View window
 let viewController = MyViewController()
 viewController.preferredContentSize = CGSize(width: 375, height: 812)
 PlaygroundPage.current.liveView = viewController
+
